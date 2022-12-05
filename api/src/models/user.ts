@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema<IUser>({
         min: 4,
         max: 10
     }
-},{timestamps: false})
+},{timestamps: false, versionKey: false})
 
 const User = mongoose.model<IUser>('User', userSchema)
 
