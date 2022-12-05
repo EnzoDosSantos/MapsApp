@@ -1,0 +1,27 @@
+version: '3.4'
+services:
+  redis-server:
+    image: redis:6.2-alpine
+    container_name: redis-server
+    restart: always
+    ports: 
+      - 6379:6379
+    
+  api:
+    container_name: api
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      args:
+        - PORT = ${PORT}
+    ports:
+      - 4000:${PORT}
+    env_file:
+      - .env
+    volumes:
+      - /usr/local/apps/myapp/dev
+    depends_on:
+      - redis-server
+    links:
+      - redis-server

@@ -1,0 +1,12 @@
+FROM node:16.18-alpine
+
+RUN mkdir -p /usr/local/apps/myapp
+WORKDIR /usr/local/apps/myapp
+COPY package*.json ./
+RUN npm install
+ENV PATH=/usr/local/apps/myapp/node_modules/.bin:$PATH
+COPY . .
+
+EXPOSE ${PORT}
+RUN npm run build
+CMD ["npm", "run", "dev:js"]
