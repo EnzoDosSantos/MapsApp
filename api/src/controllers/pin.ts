@@ -28,8 +28,8 @@ const getPinsController = async(_: Request, res: Response) => {
         if(reply) return res.json(reply)
 
         const pins = await getPins()
-        if(!pins.length){
-            return handleHttp(res, "No hay pins disponibles")
+        if(pins.length === 0){
+            return res.status(404).json({message: "No hay pines disponibles"})
         }
 
         await saveRecord("pins", 15, JSON.stringify(pins))
